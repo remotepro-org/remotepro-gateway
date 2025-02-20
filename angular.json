@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "frontend": {
+    "remotepro-gateway": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -16,7 +16,7 @@
             "customWebpackConfig": {
               "path": "./custom-webpack.config.ts"
             },
-            "outputPath": "dist/frontend/browser",
+            "outputPath": "dist/remotepro-gateway/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -75,13 +75,13 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "frontend:build:production"
+              "buildTarget": "remotepro-gateway:build:production"
             },
             "development": {
-              "buildTarget": "frontend:build:development"
+              "buildTarget": "remotepro-gateway:build:development"
             },
             "staging": {
-              "buildTarget": "frontend:build:staging"
+              "buildTarget": "remotepro-gateway:build:staging"
             }
           },
           "defaultConfiguration": "development"
