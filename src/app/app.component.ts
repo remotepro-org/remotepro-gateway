@@ -15,7 +15,7 @@ import { ThemeService } from './shared/services/theme.service';
 export class AppComponent {
   title = 'frontend';
 
-  private _themeService = inject(ThemeService);
+  private readonly _themeService = inject(ThemeService);
 
   public toggleTheme(): void {
     this._themeService.toggleDarkMode();

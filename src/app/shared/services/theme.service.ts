@@ -13,21 +13,24 @@ import { ReplaySubject, Subject, takeUntil } from 'rxjs';
   providedIn: 'root',
 })
 export class ThemeService implements OnDestroy {
-  private _platformId = inject(PLATFORM_ID);
+  private readonly _platformId = inject(PLATFORM_ID);
   // A.2 we use Angular's renderer to add/remove the dark class from the html element
-  private _renderer = inject(RendererFactory2).createRenderer(null, null);
+  private readonly _renderer = inject(RendererFactory2).createRenderer(
+    null,
+    null
+  );
   // A.3 we use Angular's DOCUMENT injection token to avoid directly accessing the document object
-  private _document = inject(DOCUMENT);
+  private readonly _document = inject(DOCUMENT);
 
   // B. Initializing our in memory theme store
   // B.1 we want to give every subscriber the current value of our theme
   // even if they subscribe after the first value was emitted
-  private _theme$ = new ReplaySubject<'light' | 'dark'>(1);
+  private readonly _theme$ = new ReplaySubject<'light' | 'dark'>(1);
   // B.2 we expose the current theme so our app can access it and e.g. show
   // a different icon for the button to toggle it
   public theme$ = this._theme$.asObservable();
   // B.3 this emits when the service is destroyed and used to clean up subscriptions
-  private _destroyed$ = new Subject<void>();
+  private readonly _destroyed$ = new Subject<void>();
 
   // C. Sync and listen to theme changes on service creation
   constructor() {
@@ -57,11 +60,9 @@ export class ThemeService implements OnDestroy {
       // if it is dark we add the dark class to the html element
       if (theme === 'dark') {
         this._renderer.addClass(this._document.documentElement, 'dark');
-      } else {
+      } else if (this._document.documentElement.className.includes('dark')) {
         // else if is added already, we remove it
-        if (this._document.documentElement.className.includes('dark')) {
-          this._renderer.removeClass(this._document.documentElement, 'dark');
-        }
+        this._renderer.removeClass(this._document.documentElement, 'dark');
       }
     });
   }
