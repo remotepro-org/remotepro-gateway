@@ -1,0 +1,39 @@
+name: Build Frontend Project
+
+on:
+  push:
+    paths:
+      - ./**
+  pull_request:
+    paths:
+      - ./**
+
+jobs:
+  build:
+    name: Build frontend project
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22.12.0]
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        working-directory: ./
+        run: npm ci
+
+      - name: Build
+        working-directory: ./
+        # env:
+        #   API_AUTH_BASE_URL: ${{ secrets.API_AUTH_BASE_URL }}
+        #   API_BASE_URL: ${{ secrets.API_BASE_URL }}
+        #   AUTH_CLIENT_URL: ${{ secrets.AUTH_CLIENT_URL }}`
+        run: npm run build
